@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PracticaSQLite</string>
+    <string name="nuevo_partido">Nuevo Partido</string>
+    <string name="nuevo_jugador">Nuevo Jugador</string>
+    <string name="tab_jugador">Jugadores</string>
+    <string name="tab_partido">Partidos</string>
+    <string name="tab_selected">seleccionada</string>
+    <string name="borrar_partido">Borrar Partido</string>
+    <string name="borrar_jugador">Borrar Jugador</string>
+    <string name="seguro">¿Desea borrar: </string>
+    <string name="title_activity_nuevo_partido">NuevoPartido</string>
+    <string name="nombre">Nombre</string>
+    <string name="fecha_nac">Fecha de Nacimiento</string>
+    <string name="telefono">Teléfono</string>
+    <string name="valoracion">Valoración</string>
+    <string name="contrincante">Contrincante</string>
+    <string name="jugador">ID Jugador</string>
+    <string name="title_activity_nuevo_jugador">NuevoJugador</string>
+
+</resources>

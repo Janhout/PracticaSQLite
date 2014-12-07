@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Principal">
+    <item
+        android:id="@+id/menu_Jugador"
+        android:orderInCategory="100"
+        android:title="@string/nuevo_jugador"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_Partido"
+        android:orderInCategory="100"
+        android:title="@string/nuevo_partido"
+        app:showAsAction="never" />
+</menu>
