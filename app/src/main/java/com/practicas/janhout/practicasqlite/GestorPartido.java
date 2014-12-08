@@ -3,6 +3,8 @@ package com.practicas.janhout.practicasqlite;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -34,8 +36,13 @@ public class GestorPartido {
         valores.put(Contrato.TablaPartido.ID_JUGADOR, objeto.getIdJugador());
         valores.put(Contrato.TablaPartido.CONTRINCANTE, objeto.getContrincante());
         valores.put(Contrato.TablaPartido.VALORACION, objeto.getValoracion());
-        long id = bd.insert(Contrato.TablaPartido.TABLA, null, valores);
-        return id;
+        try {
+            long id = bd.insert(Contrato.TablaPartido.TABLA, null, valores);
+            return id;
+        } catch (SQLiteConstraintException e) {
+        } catch (SQLException e) {
+        }
+        return -1;
     }
 
     public int delete(Partido objeto) {

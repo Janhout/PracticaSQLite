@@ -122,16 +122,16 @@ public class FragmentoListaJugador extends Fragment {
 
         alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                if (!nombre.equals("") && !fnac.equals("") && !telefono.equals("")) {
+                if (!nombre.getText().toString().equals("")
+                        && !fnac.getText().toString().equals("")
+                        && !telefono.getText().toString().equals("")) {
                     Jugador j = new Jugador(nombre.getText().toString(),
                             telefono.getText().toString(),
                             fnac.getText().toString());
-                    try {
-                        gj.insert(j);
-                        ad.changeCursor(gj.getCursorFinal());
-                    } catch (SQLiteConstraintException e) {
-                    } catch (SQLException e) {
-                    }
+                    gj.insert(j);
+                    ad.changeCursor(gj.getCursorFinal());
+                } else{
+                    Principal.tostada(getActivity(),getString(R.string.datos_vacios));
                 }
             }
         });

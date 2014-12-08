@@ -2,9 +2,11 @@ package com.practicas.janhout.practicasqlite;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class Principal extends Activity {
 
@@ -68,15 +70,7 @@ public class Principal extends Activity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        actionBar.setSelectedNavigationItem(savedInstanceState.getInt(getString(R.string.tab_selected)));
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(getString(R.string.tab_selected), actionBar.getSelectedNavigationIndex());
+    public static void tostada(Context c, String s){
+        Toast.makeText(c, s, Toast.LENGTH_SHORT).show();
     }
 }

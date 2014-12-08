@@ -19,4 +19,9 @@
     <string name="jugador">ID Jugador</string>
     <string name="title_activity_nuevo_jugador">NuevoJugador</string>
 
+    <string name="error">Error</string>
+    <string name="jugador_repe">El nombre tiene que ser único</string>
+    <string name="partido_repe">Partido repetido para ese jugador</string>
+    <string name="datos_vacios">Datos vacíos</string>
+
 </resources>

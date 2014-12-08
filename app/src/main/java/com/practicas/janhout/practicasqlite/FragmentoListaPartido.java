@@ -122,16 +122,16 @@ public class FragmentoListaPartido extends Fragment {
 
         alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                if (!contrincante.equals("") && !valoracion.equals("") && !jugador.equals("")) {
+                if (!contrincante.getText().toString().equals("")
+                        && !valoracion.getText().toString().equals("")
+                        && !jugador.getText().toString().equals("")) {
                     Partido p = new Partido(jugador.getText().toString(),
                             contrincante.getText().toString(),
                             valoracion.getText().toString());
-                    try {
-                        gp.insert(p);
-                        ad.changeCursor(gp.getCursor());
-                    } catch (SQLiteConstraintException e) {
-                    } catch (SQLException e) {
-                    }
+                    gp.insert(p);
+                    ad.changeCursor(gp.getCursor());
+                }else{
+                    Principal.tostada(getActivity(),getString(R.string.datos_vacios));
                 }
             }
         });
