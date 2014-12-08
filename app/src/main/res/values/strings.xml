@@ -17,6 +17,7 @@
     <string name="valoracion">Valoración</string>
     <string name="contrincante">Contrincante</string>
     <string name="jugador">ID Jugador</string>
+    <string name="juga">Jugador</string>
     <string name="title_activity_nuevo_jugador">NuevoJugador</string>
 
     <string name="error">Error</string>

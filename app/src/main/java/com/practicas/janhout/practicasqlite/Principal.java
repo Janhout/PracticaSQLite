@@ -48,10 +48,10 @@ public class Principal extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menu_Jugador) {
+        if (id == R.id.menu_Jugador && actionBar.getSelectedNavigationIndex()==0) {
             fj.nuevoJugador();
             return true;
-        } else if (id == R.id.menu_Partido) {
+        } else if (id == R.id.menu_Partido && actionBar.getSelectedNavigationIndex()==1) {
             fp.nuevoPartido();
             return true;
         }
@@ -63,7 +63,7 @@ public class Principal extends Activity {
         if(actionBar.getSelectedNavigationIndex()==0){
             menu.findItem(R.id.menu_Partido).setVisible(false);
             menu.findItem(R.id.menu_Jugador).setVisible(true);
-        }else{
+        }else if(actionBar.getSelectedNavigationIndex()==1){
             menu.findItem(R.id.menu_Jugador).setVisible(false);
             menu.findItem(R.id.menu_Partido).setVisible(true);
         }

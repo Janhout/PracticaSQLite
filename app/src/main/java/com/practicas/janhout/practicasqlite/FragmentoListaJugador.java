@@ -29,8 +29,6 @@ public class FragmentoListaJugador extends Fragment {
     private GestorJugador gj;
     private AlertDialog alerta;
 
-    private final int ACTIVIDAD_JUGADOR = 1;
-
     public FragmentoListaJugador() {
     }
 

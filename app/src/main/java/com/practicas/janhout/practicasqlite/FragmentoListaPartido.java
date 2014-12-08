@@ -29,8 +29,6 @@ public class FragmentoListaPartido extends Fragment {
     private GestorPartido gp;
     private AlertDialog alerta;
 
-    private final int ACTIVIDAD_PARTIDO = 1;
-
     public FragmentoListaPartido() {
     }
 
@@ -70,7 +68,7 @@ public class FragmentoListaPartido extends Fragment {
     public void onResume() {
         super.onResume();
         gp.open();
-        Cursor c = gp.getCursor();
+        Cursor c = gp.getCursorFinal();
         ad = new AdaptadorPartido(getActivity(), c);
         lvPartido = (ListView) getView().findViewById(R.id.lv);
         lvPartido.setAdapter(ad);
@@ -94,13 +92,13 @@ public class FragmentoListaPartido extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         final View vista = inflater.inflate(R.layout.dialogo_borrar, null);
         alert.setView(vista);
-        String nombre = p.getContrincante() + " (jugador: " + p.getIdJugador() + ")";
+        String nombre = p.getContrincante() + " (" +getString(R.string.jugador) + ": " + p.getIdJugador() + ")";
         TextView texto = (TextView) vista.findViewById(R.id.tvConfirmacion);
         texto.setText(getString(R.string.seguro) + " " + nombre + "?");
         alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 gp.delete(p);
-                ad.changeCursor(gp.getCursor());
+                ad.changeCursor(gp.getCursorFinal());
             }
         });
         alert.setNegativeButton(android.R.string.no, null);
@@ -129,7 +127,7 @@ public class FragmentoListaPartido extends Fragment {
                             contrincante.getText().toString(),
                             valoracion.getText().toString());
                     gp.insert(p);
-                    ad.changeCursor(gp.getCursor());
+                    ad.changeCursor(gp.getCursorFinal());
                 }else{
                     Principal.tostada(getActivity(),getString(R.string.datos_vacios));
                 }

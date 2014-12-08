@@ -26,10 +26,13 @@ public class AdaptadorPartido extends CursorAdapter {
         TextView tvV = ((TextView) view.findViewById(R.id.tvValoracion));
         TextView tvC = ((TextView) view.findViewById(R.id.tvContrincante));
         TextView tvJ = ((TextView) view.findViewById(R.id.tvJugador));
-        Partido p = GestorPartido.getRow(cursor);
 
-        tvV.append(p.getValoracion()+"");
-        tvC.append(": " + p.getContrincante());
-        tvJ.append(": " + p.getIdJugador());
+        if(cursor.getString(1) != null) {
+            tvJ.setText(context.getString(R.string.juga) + ": " + cursor.getString(1));
+        }else{
+            tvJ.setText(context.getString(R.string.juga) + ": " + cursor.getLong(0));
+        }
+        tvC.setText(context.getString(R.string.contrincante) + ": " + cursor.getString(2));
+        tvV.setText(cursor.getLong(3)+"");
     }
 }

@@ -112,6 +112,25 @@ public class GestorPartido {
         return getCursor(null, null, null);
     }
 
+    public Cursor getCursorFinal(){
+        String tablaJugador = Contrato.TablaJugadorV2.TABLA;
+        String tablaPartido = Contrato.TablaPartido.TABLA;
+        String jugadorNombre = Contrato.TablaJugadorV2.TABLA + "." + Contrato.TablaJugadorV2.NOMBRE;
+        String jugadorid = Contrato.TablaJugadorV2.TABLA + "." + Contrato.TablaJugadorV2._ID;
+        String jugadoridpartido = Contrato.TablaPartido.TABLA + "." + Contrato.TablaPartido.ID_JUGADOR;
+        String idpartido = Contrato.TablaPartido.TABLA + "." + Contrato.TablaPartido._ID;
+
+        String consulta = "select " + idpartido +
+                ", " + jugadorNombre +
+                ", " + Contrato.TablaPartido.CONTRINCANTE +
+                ", " + Contrato.TablaPartido.VALORACION +
+                " from " + tablaPartido +
+                " left outer join " + tablaJugador +
+                " on " + jugadorid + " = " + jugadoridpartido;
+        Cursor c = bd.rawQuery(consulta, null);
+        return c;
+    }
+
     public List<Partido> select() {
         return select(null, null, null);
     }
