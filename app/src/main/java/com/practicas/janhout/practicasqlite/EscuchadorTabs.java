@@ -5,14 +5,14 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 
-public class EscuchadorTabs <T extends Fragment> implements ActionBar.TabListener {
+public class EscuchadorTabs<T extends Fragment> implements ActionBar.TabListener {
 
     private Fragment fragment;
     private final String tag;
 
-    public EscuchadorTabs (Activity activity, String tag, Class<T> cls) {
+    public EscuchadorTabs(Activity activity, String tag, Fragment f) {
         this.tag = tag;
-        fragment = Fragment.instantiate(activity, cls.getName());
+        fragment = f;
     }
 
     @Override
@@ -26,6 +26,7 @@ public class EscuchadorTabs <T extends Fragment> implements ActionBar.TabListene
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {}
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+    }
 
 }

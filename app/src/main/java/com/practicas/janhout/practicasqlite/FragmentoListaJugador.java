@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +37,9 @@ public class FragmentoListaJugador extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int id = item.getItemId();
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int index = info.position;
-        if(id == R.id.cont_borr_jug){
+        if (id == R.id.cont_borr_jug) {
             return borrarJugador(index);
         }
         return super.onContextItemSelected(item);
@@ -69,7 +72,7 @@ public class FragmentoListaJugador extends Fragment {
         gj.open();
         Cursor c = gj.getCursorFinal();
         ad = new AdaptadorJugador(getActivity(), c);
-        lvJugador = (ListView)getView().findViewById(R.id.lv);
+        lvJugador = (ListView) getView().findViewById(R.id.lv);
         lvJugador.setAdapter(ad);
         registerForContextMenu(lvJugador);
     }
@@ -77,13 +80,13 @@ public class FragmentoListaJugador extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        if(alerta != null){
+        if (alerta != null) {
             alerta.dismiss();
         }
     }
 
-    private boolean borrarJugador(int index){
-        Cursor c = (Cursor)lvJugador.getItemAtPosition(index);
+    private boolean borrarJugador(int index) {
+        Cursor c = (Cursor) lvJugador.getItemAtPosition(index);
         final Jugador j = GestorJugador.getRow(c);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -91,11 +94,11 @@ public class FragmentoListaJugador extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         final View vista = inflater.inflate(R.layout.dialogo_borrar, null);
         alert.setView(vista);
-        String nombre = j.getNombre() + " (" +  j.getId() + ")";
-        TextView texto = (TextView)vista.findViewById(R.id.tvConfirmacion);
+        String nombre = j.getNombre() + " (" + j.getId() + ")";
+        TextView texto = (TextView) vista.findViewById(R.id.tvConfirmacion);
         texto.setText(getString(R.string.seguro) + " " + nombre + "?");
-        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int whichButton){
+        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
                 gj.deleteAll(j);
                 ad.changeCursor(gj.getCursorFinal());
             }
@@ -106,7 +109,34 @@ public class FragmentoListaJugador extends Fragment {
         return true;
     }
 
-    public void nuevoJugador(){
+    public void nuevoJugador() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle(getString(R.string.nuevo_jugador));
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        final View vista = inflater.inflate(R.layout.activity_nuevo_jugador, null);
+        alert.setView(vista);
 
+        final EditText nombre = (EditText) vista.findViewById(R.id.etNombre);
+        final EditText fnac = (EditText) vista.findViewById(R.id.etFNac);
+        final EditText telefono = (EditText) vista.findViewById(R.id.etTelefono);
+
+        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if (!nombre.equals("") && !fnac.equals("") && !telefono.equals("")) {
+                    Jugador j = new Jugador(nombre.getText().toString(),
+                            telefono.getText().toString(),
+                            fnac.getText().toString());
+                    try {
+                        gj.insert(j);
+                        ad.changeCursor(gj.getCursorFinal());
+                    } catch (SQLiteConstraintException e) {
+                    } catch (SQLException e) {
+                    }
+                }
+            }
+        });
+        alert.setNegativeButton(android.R.string.no, null);
+        alerta = alert.create();
+        alerta.show();
     }
 }

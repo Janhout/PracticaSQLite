@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class AdaptadorPartido extends CursorAdapter {
 
-    public AdaptadorPartido(Context co, Cursor cu){
+    public AdaptadorPartido(Context co, Cursor cu) {
         super(co, cu, true);
     }
 
@@ -23,8 +23,13 @@ public class AdaptadorPartido extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView tv = ((TextView)view.findViewById(R.id.textView));
+        TextView tvV = ((TextView) view.findViewById(R.id.tvValoracion));
+        TextView tvC = ((TextView) view.findViewById(R.id.tvContrincante));
+        TextView tvJ = ((TextView) view.findViewById(R.id.tvJugador));
         Partido p = GestorPartido.getRow(cursor);
-        tv.setText(p.toString());
+
+        tvV.append(p.getValoracion()+"");
+        tvC.append(": " + p.getContrincante());
+        tvJ.append(": " + p.getIdJugador());
     }
 }

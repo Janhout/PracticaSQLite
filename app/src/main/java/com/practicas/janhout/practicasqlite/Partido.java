@@ -2,7 +2,7 @@ package com.practicas.janhout.practicasqlite;
 
 import java.io.Serializable;
 
-public class Partido implements Serializable, Comparable<Partido>{
+public class Partido implements Serializable, Comparable<Partido> {
 
     private long id;
     private long idJugador;
@@ -10,7 +10,7 @@ public class Partido implements Serializable, Comparable<Partido>{
     private int valoracion;
 
     public Partido() {
-        this(0,0,"",0);
+        this(0, 0, "", 0);
     }
 
     public Partido(long id, long idJugador, String contrincante, int valoracion) {
@@ -20,13 +20,17 @@ public class Partido implements Serializable, Comparable<Partido>{
         this.valoracion = valoracion;
     }
 
-    public Partido(long idJugador, String contrincante, String valoracion) {
+    public Partido(String idJugador, String contrincante, String valoracion) {
         this.id = 0;
-        this.idJugador = idJugador;
+        try {
+            this.idJugador = Long.valueOf(idJugador);
+        } catch (NumberFormatException e) {
+            this.idJugador = 0;
+        }
         this.contrincante = contrincante;
-        try{
+        try {
             this.valoracion = Integer.parseInt(valoracion);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             this.valoracion = 0;
         }
     }
@@ -86,10 +90,10 @@ public class Partido implements Serializable, Comparable<Partido>{
 
     @Override
     public int compareTo(Partido another) {
-        if(this.contrincante.compareTo(another.contrincante)!=0){
+        if (this.contrincante.compareTo(another.contrincante) != 0) {
             return this.contrincante.compareTo(another.contrincante);
-        }else{
-            return (int)(this.idJugador - another.idJugador);
+        } else {
+            return (int) (this.idJugador - another.idJugador);
         }
     }
 

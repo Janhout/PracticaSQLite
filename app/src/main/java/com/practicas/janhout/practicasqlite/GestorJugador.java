@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +31,9 @@ public class GestorJugador {
 
     public long insert(Jugador objeto) {
         ContentValues valores = new ContentValues();
-        valores.put(Contrato.TablaJugadorV2.FNAC, objeto.getFnac());
-        valores.put(Contrato.TablaJugadorV2.TELEFONO, objeto.getTelefono());
         valores.put(Contrato.TablaJugadorV2.NOMBRE, objeto.getNombre());
+        valores.put(Contrato.TablaJugadorV2.TELEFONO, objeto.getTelefono());
+        valores.put(Contrato.TablaJugadorV2.FNAC, objeto.getFnac());
         long id = bd.insert(Contrato.TablaJugadorV2.TABLA, null, valores);
         return id;
     }
@@ -111,7 +110,7 @@ public class GestorJugador {
         return cursor;
     }
 
-    public Cursor getCursorFinal(){
+    public Cursor getCursorFinal() {
         String tablaJugador = Contrato.TablaJugadorV2.TABLA;
         String tablaPartido = Contrato.TablaPartido.TABLA;
         String jugadorid = Contrato.TablaJugadorV2.TABLA + "." + Contrato.TablaJugadorV2._ID;
@@ -123,10 +122,10 @@ public class GestorJugador {
                 ", " + Contrato.TablaJugadorV2.FNAC +
                 ", avg(" + Contrato.TablaPartido.VALORACION +
                 ") from " + tablaJugador +
-                " inner join " + tablaPartido +
+                " left outer join " + tablaPartido +
                 " on " + jugadorid + " = " + jugadoridpartido +
                 " group by " + jugadorid;
-        Cursor c = bd.rawQuery (consulta, null);
+        Cursor c = bd.rawQuery(consulta, null);
         return c;
     }
 

@@ -4,8 +4,4 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light">
         <!-- Customize your theme here. -->
     </style>
-
-    <style name="dialogo" parent="android:Theme.Holo.Light.Dialog">
-
-    </style>
 </resources>

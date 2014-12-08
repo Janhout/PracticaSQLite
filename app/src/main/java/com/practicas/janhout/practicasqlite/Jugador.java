@@ -2,15 +2,15 @@ package com.practicas.janhout.practicasqlite;
 
 import java.io.Serializable;
 
-public class Jugador implements Serializable, Comparable<Jugador>{
+public class Jugador implements Serializable, Comparable<Jugador> {
 
     private long id;
     private String nombre;
     private String telefono;
     private String fnac;
 
-    public Jugador(){
-        this(0,"","","");
+    public Jugador() {
+        this(0, "", "", "");
     }
 
     public Jugador(long id, String nombre, String telefono, String fnac) {
@@ -20,7 +20,7 @@ public class Jugador implements Serializable, Comparable<Jugador>{
         this.fnac = fnac;
     }
 
-    public Jugador(String nombre, String telefono, String fnac){
+    public Jugador(String nombre, String telefono, String fnac) {
         this.id = 0;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -76,9 +76,9 @@ public class Jugador implements Serializable, Comparable<Jugador>{
 
     @Override
     public int compareTo(Jugador jugador) {
-        if(this.nombre.compareTo(jugador.nombre)!=0){
+        if (this.nombre.compareTo(jugador.nombre) != 0) {
             return this.nombre.compareTo(jugador.nombre);
-        }else{
+        } else {
             return this.fnac.compareTo(jugador.fnac);
         }
     }

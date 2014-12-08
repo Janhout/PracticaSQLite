@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +37,9 @@ public class FragmentoListaPartido extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int id = item.getItemId();
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int index = info.position;
-        if(id == R.id.cont_borr_par){
+        if (id == R.id.cont_borr_par) {
             return borrarPartido(index);
         }
         return super.onContextItemSelected(item);
@@ -77,13 +80,13 @@ public class FragmentoListaPartido extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        if(alerta != null){
+        if (alerta != null) {
             alerta.dismiss();
         }
     }
 
-    private boolean borrarPartido(int index){
-        Cursor c = (Cursor)lvPartido.getItemAtPosition(index);
+    private boolean borrarPartido(int index) {
+        Cursor c = (Cursor) lvPartido.getItemAtPosition(index);
         final Partido p = GestorPartido.getRow(c);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -91,11 +94,11 @@ public class FragmentoListaPartido extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         final View vista = inflater.inflate(R.layout.dialogo_borrar, null);
         alert.setView(vista);
-        String nombre = p.getContrincante() + " (jugador: " +  p.getIdJugador() + ")";
-        TextView texto = (TextView)vista.findViewById(R.id.tvConfirmacion);
+        String nombre = p.getContrincante() + " (jugador: " + p.getIdJugador() + ")";
+        TextView texto = (TextView) vista.findViewById(R.id.tvConfirmacion);
         texto.setText(getString(R.string.seguro) + " " + nombre + "?");
-        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int whichButton){
+        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
                 gp.delete(p);
                 ad.changeCursor(gp.getCursor());
             }
@@ -107,6 +110,33 @@ public class FragmentoListaPartido extends Fragment {
     }
 
     public void nuevoPartido() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle(getString(R.string.nuevo_partido));
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        final View vista = inflater.inflate(R.layout.activity_nuevo_partido, null);
+        alert.setView(vista);
 
+        final EditText contrincante = (EditText) vista.findViewById(R.id.etContrincante);
+        final EditText valoracion = (EditText) vista.findViewById(R.id.etValoracion);
+        final EditText jugador = (EditText) vista.findViewById(R.id.etJugador);
+
+        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if (!contrincante.equals("") && !valoracion.equals("") && !jugador.equals("")) {
+                    Partido p = new Partido(jugador.getText().toString(),
+                            contrincante.getText().toString(),
+                            valoracion.getText().toString());
+                    try {
+                        gp.insert(p);
+                        ad.changeCursor(gp.getCursor());
+                    } catch (SQLiteConstraintException e) {
+                    } catch (SQLException e) {
+                    }
+                }
+            }
+        });
+        alert.setNegativeButton(android.R.string.no, null);
+        alerta = alert.create();
+        alerta.show();
     }
 }
