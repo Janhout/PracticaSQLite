@@ -92,7 +92,7 @@ public class FragmentoListaPartido extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         final View vista = inflater.inflate(R.layout.dialogo_borrar, null);
         alert.setView(vista);
-        String nombre = p.getContrincante() + " (" +getString(R.string.jugador) + ": " + p.getIdJugador() + ")";
+        String nombre = getString(R.string.partido) + p.getId()+"" ;
         TextView texto = (TextView) vista.findViewById(R.id.tvConfirmacion);
         texto.setText(getString(R.string.seguro) + " " + nombre + "?");
         alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -120,12 +120,12 @@ public class FragmentoListaPartido extends Fragment {
 
         alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                if (!contrincante.getText().toString().equals("")
-                        && !valoracion.getText().toString().equals("")
-                        && !jugador.getText().toString().equals("")) {
-                    Partido p = new Partido(jugador.getText().toString(),
-                            contrincante.getText().toString(),
-                            valoracion.getText().toString());
+                if (!contrincante.getText().toString().trim().equals("")
+                        && !valoracion.getText().toString().trim().equals("")
+                        && !jugador.getText().toString().trim().equals("")) {
+                    Partido p = new Partido(jugador.getText().toString().trim(),
+                            contrincante.getText().toString().trim(),
+                            valoracion.getText().toString().trim());
                     gp.insert(p);
                     ad.changeCursor(gp.getCursorFinal());
                 }else{

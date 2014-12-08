@@ -120,12 +120,12 @@ public class FragmentoListaJugador extends Fragment {
 
         alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                if (!nombre.getText().toString().equals("")
-                        && !fnac.getText().toString().equals("")
-                        && !telefono.getText().toString().equals("")) {
-                    Jugador j = new Jugador(nombre.getText().toString(),
-                            telefono.getText().toString(),
-                            fnac.getText().toString());
+                if (!nombre.getText().toString().trim().equals("")
+                        && !fnac.getText().toString().trim().equals("")
+                        && !telefono.getText().toString().trim().equals("")) {
+                    Jugador j = new Jugador(nombre.getText().toString().trim(),
+                            telefono.getText().toString().trim(),
+                            fnac.getText().toString().trim());
                     gj.insert(j);
                     ad.changeCursor(gj.getCursorFinal());
                 } else{
